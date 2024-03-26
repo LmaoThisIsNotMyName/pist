@@ -144,8 +144,10 @@ MainTab:AddToggle({
                     break
                 end
                 
-                if Player.Character.HumanoidRootPart.CFrame.X ~= area.X or Player.Character.HumanoidRootPart.CFrame.Z ~= area.Z and alive() then
-                    Teleport(area)
+                if area then
+                    if Player.Character.HumanoidRootPart.CFrame.X ~= area.X or Player.Character.HumanoidRootPart.CFrame.Z ~= area.Z and alive() then
+                        Teleport(area)
+                    end
                 end
                 
                 if not IsEquipped(tool) then
