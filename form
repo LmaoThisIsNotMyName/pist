@@ -59,7 +59,7 @@ local MainTab = Window:MakeTab({
 MainTab:AddToggle({
 	Name = "Auto Farm",
 	Default = false,
-	Callback = function(Value)
+	Callback = spawn(function(Value)
 		while Value do
             local area = GetArea()
             if area then
@@ -76,5 +76,5 @@ MainTab:AddToggle({
                 Punch()
             end
         end
-	end    
+	end)
 })
