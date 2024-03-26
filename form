@@ -46,8 +46,35 @@ function alive()
     return false
 end
 
-function OptimizeGraphic()
-    local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+function PotatoGraphic()
+    workspace:FindFirstChildOfClass('Terrain').WaterWaveSize = 0
+    workspace:FindFirstChildOfClass('Terrain').WaterWaveSpeed = 0
+    workspace:FindFirstChildOfClass('Terrain').WaterReflectance = 0
+    workspace:FindFirstChildOfClass('Terrain').WaterTransparency = 0
+    game:GetService("Lighting").GlobalShadows = false
+    game:GetService("Lighting").FogEnd = 9e9
+    settings().Rendering.QualityLevel = 1
+    for i,v in pairs(workspace:GetDescendants()) do
+            if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+                v.Material = "Plastic"
+                v.Reflectance = 0
+            elseif v:IsA("Decal") then
+                v.Transparency = 1
+            elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                v.Lifetime = NumberRange.new(0)
+            elseif v:IsA("Explosion") then
+                v.BlastPressure = 1
+                v.BlastRadius = 1
+            end
+        end
+
+	for i,v in pairs(game:GetService("Lighting"):GetDescendants()) do
+		if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+			v.Enabled = false
+		end
+	end
+
+    local decalsyeeted = true
     local g = game
     local w = g.Workspace
     local l = g.Lighting
@@ -143,6 +170,8 @@ local SettingTab = Window:MakeTab({
 })
 
 SettingTab:AddButton({
-	Name = "Reduce Lag",
-	Callback = OptimizeGraphic()
+	Name = "Potato Graphic (reduce lag mayebe)",
+	Callback = PotatoGraphic
 })
+
+OrionLib:Init()
