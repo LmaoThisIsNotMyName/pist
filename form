@@ -62,6 +62,7 @@ MainTab:AddToggle({
         
         while _G.AutoFarm do
             if not alive() then
+                wait(5)
                 continue
             end
 
@@ -79,7 +80,7 @@ MainTab:AddToggle({
                 if not IsEquipped(tool) then
                     Equip(tool)
                 end
-                Punch()
+                if alive() then Punch() end
             end
         end
 
