@@ -68,19 +68,17 @@ MainTab:AddToggle({
                 wait(1)
             end
 
-            if area and alive() then
-                Teleport(area)
-            else
-                wait(1)
-                continue
-            end
 
             while wait() do
                 if not _G.AutoFarm then
                     Player.Character.Humanoid:UnequipTools()
                     break
                 end
-
+                
+                if Player.Character.HumanoidRootPart.CFrame.X ~= area.X or Player.Character.HumanoidRootPart.CFrame.Z ~= area.Z and alive() then
+                    Teleport(area)
+                end
+                
                 if not IsEquipped(tool) then
                     Equip(tool)
                 end
