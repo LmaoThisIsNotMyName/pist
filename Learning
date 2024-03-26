@@ -135,9 +135,7 @@ MainTab:AddToggle({
             local area = GetArea()
             local tool = "Punch"
 
-            while not alive() do
-                wait(1)
-            end
+            repeat wait() until alive()
 
 
             while wait() do
