@@ -75,11 +75,20 @@ MainTab:AddToggle({
                 Teleport(area)
             end
             while wait() do
+                if not _G.AutoFarm then
+                    Player.Character.Humanoid:UnequipTools()
+                    break
+                end
+
                 if not IsEquipped(tool) then
                     Equip(tool)
                 end
                 Punch()
             end
+        end
+
+        if not _G.AutoFarm and alive() then
+            Player.Character.Humanoid:UnequipTools()
         end
     end
 })
