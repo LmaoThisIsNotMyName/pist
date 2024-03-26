@@ -2,10 +2,7 @@ local Player = game:GetService('Players').LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 _G.AutoFarm = false
 
-function Punch()
-    if not alive() then return false end
-    game:GetService("Players").LocalPlayer.Character.Punch.Event:FireServer(unpack({[1]=2}))
-end
+function Punch() game:GetService("Players").LocalPlayer.Character.Punch.Event:FireServer(unpack({[1]=2})) end
 
 function GetArea()
     local area = nil
@@ -23,13 +20,9 @@ function GetArea()
     return area
 end
 
-function Teleport(position)
-    if not alive() then return false end
-    Player.Character.HumanoidRootPart.CFrame = position
-end
+function Teleport(position) Player.Character.HumanoidRootPart.CFrame = position end
 
 function Equip(toolname)
-    if not alive() then return false end
     local tool = Player.Backpack:FindFirstChild(toolname)
     if tool then
         Player.Character.Humanoid:EquipTool(tool)
@@ -37,7 +30,6 @@ function Equip(toolname)
 end
 
 function IsEquipped(toolname)
-    if not alive() then return false end
     for _, tool in ipairs(Player.Character:GetChildren()) do
         if tool:IsA("Tool") and tool.Name == toolname then
             return true
@@ -69,12 +61,16 @@ MainTab:AddToggle({
         _G.AutoFarm = Value
         
         while _G.AutoFarm do
+            if not alive() then
+                continue
+            end
+
             local area = GetArea()
             local tool = "Punch"
             if area then
                 Teleport(area)
             end
-            while wait() do
+            while alive() and wait() do
                 if not _G.AutoFarm then
                     Player.Character.Humanoid:UnequipTools()
                     break
