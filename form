@@ -74,6 +74,7 @@ MainTab:AddToggle({
                     Equip(tool)
                 end
                 Punch()
+                wait()
             end
         end
     end)
