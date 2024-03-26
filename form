@@ -70,6 +70,9 @@ MainTab:AddToggle({
 
             if area and alive() then
                 Teleport(area)
+            else
+                wait(1)
+                continue
             end
 
             while wait() do
@@ -82,7 +85,7 @@ MainTab:AddToggle({
                     Equip(tool)
                 end
 
-                if game:GetService('Players').LocalPlayer.Character:FindFirstChild("Punch") then Punch() end
+                if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Punch") then Punch() end
             end
         end
 
