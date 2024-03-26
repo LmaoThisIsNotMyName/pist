@@ -155,6 +155,7 @@ MainTab:AddToggle({
                 end
 
                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Punch") then Punch() end
+                area = GetArea()
             end
         end
 
@@ -177,7 +178,7 @@ SettingTab:AddButton({
 })
 
 SettingTab:AddToggle({
-	Name = "White Screen (Significantly reduce lag)",
+	Name = "White Screen (Significantly reduce lag, best option for AFK)",
 	Default = false,
 	Callback = function(Value)
 		if Value then
