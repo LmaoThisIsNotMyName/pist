@@ -62,19 +62,18 @@ MainTab:AddToggle({
 	Default = false,
 	Callback = function(Value)
         _G.AutoFarm = Value
+        
         while _G.AutoFarm do
-            if Player.Character.Humanoid then
-                local area = GetArea()
-                local tool = 'Punch'
-                if area then
-                    Teleport(area)
+            local tool = 'Punch'
+            local area = GetArea()
+            if area and Player.Character.Humanoid then
+                Teleport(area)
+            end
+            while _G.AutoFarm and wait() and Player.Character.Humanoid do
+                if not IsEquipped(tool) then
+                    Equip(tool)
                 end
-                while wait() do
-                    if not IsEquipped(tool) then
-                        Equip(tool)
-                    end
-                    Punch()
-                end
+                Punch()
             end
         end
     end
