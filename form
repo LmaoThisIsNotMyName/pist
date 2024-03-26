@@ -62,12 +62,12 @@ MainTab:AddToggle({
         
         while _G.AutoFarm do
             while not alive() do
-                wait(1)
+                wait(0.1)
             end
 
             local area = GetArea()
             local tool = "Punch"
-            if area then
+            if area and alive() then
                 Teleport(area)
             end
 
@@ -80,11 +80,12 @@ MainTab:AddToggle({
                 if not IsEquipped(tool) then
                     Equip(tool)
                 end
-                Punch()
+
+                if alive() then Punch() end
             end
         end
 
-        if not _G.AutoFarm and alive() then
+        if not _G.AutoFarm then
             Player.Character.Humanoid:UnequipTools()
         end
     end
