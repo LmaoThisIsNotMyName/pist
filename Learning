@@ -180,7 +180,7 @@ SettingTab:AddButton({
 })
 
 SettingTab:AddToggle({
-	Name = "White Screen (Significantly reduce lag, best option for AFK)",
+	Name = "White Screen (Significantly reduce lag)",
 	Default = false,
 	Callback = function(Value)
 		if Value then
