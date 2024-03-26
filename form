@@ -61,12 +61,13 @@ MainTab:AddToggle({
         _G.AutoFarm = Value
         
         while _G.AutoFarm do
-            while not alive() do
-                wait(0.1)
-            end
-
             local area = GetArea()
             local tool = "Punch"
+
+            while not alive() and not Player.Backpack:FindFirstChild(tool) do
+                wait(1)
+            end
+
             if area and alive() then
                 Teleport(area)
             end
