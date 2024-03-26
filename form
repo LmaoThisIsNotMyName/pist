@@ -2,13 +2,7 @@ local Player = game:GetService('Players').LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 _G.AutoFarm = false
 
-function Punch()
-    local args = {
-        [1] = 2
-    }
-
-    game:GetService("Players").LocalPlayer.Character.Punch.Event:FireServer(unpack(args))
-end
+function Punch() game:GetService("Players").LocalPlayer.Character.Punch.Event:FireServer(unpack({[1]=2})) end
 
 function GetArea()
     local area = nil
@@ -66,10 +60,12 @@ MainTab:AddToggle({
         while _G.AutoFarm do
             local tool = 'Punch'
             local area = GetArea()
-            if area and Player.Character.Humanoid then
+
+            if area and Player.Character:FindFirstChildOfClass("Humanoid") then
                 Teleport(area)
             end
-            while _G.AutoFarm and wait() and Player.Character.Humanoid do
+
+            while _G.AutoFarm and wait() and Player.Character:FindFirstChildOfClass("Humanoid") do
                 if not IsEquipped(tool) then
                     Equip(tool)
                 end
