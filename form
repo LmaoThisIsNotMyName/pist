@@ -66,7 +66,7 @@ MainTab:AddToggle({
             if area then
                 Teleport(area)
             end
-            while Player.Character.HumanoidRootPart do
+            while Player.Character.Humanoid do
                 if Value == false then
                     break
                 end
