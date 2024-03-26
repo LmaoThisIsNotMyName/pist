@@ -64,7 +64,7 @@ MainTab:AddToggle({
             local area = GetArea()
             local tool = "Punch"
 
-            while not alive() and not Player.Backpack:FindFirstChild(tool) do
+            while not alive() do
                 wait(1)
             end
 
@@ -82,7 +82,7 @@ MainTab:AddToggle({
                     Equip(tool)
                 end
 
-                if alive() then Punch() end
+                if game.GetService('Players').LocalPlayer.Character:FindFirstChild("Punch") then Punch() end
             end
         end
 
