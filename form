@@ -1,4 +1,80 @@
-{
-  "name": "admin",
-  "password": "tvbmtcfs"
-}
+local Player = game:GetService('Players').LocalPlayer
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+function Punch()
+    local args = {
+        [1] = 2
+    }
+
+    game:GetService("Players").LocalPlayer.Character.Punch.Event:FireServer(unpack(args))
+end
+
+function GetArea()
+    local area = nil
+    local PlayerPower = Player.leaderstats.Power.Value
+
+    for i, v in ipairs(game:GetService("Workspace").IgnoreParts.TrainingAreas:GetChildren()) do
+        if v ~= game:GetService("Workspace").IgnoreParts.TrainingAreas.TrainingAreasScript then
+            local AreaRequirement = v.Requirement.Value
+            if AreaRequirement <= PlayerPower then
+                area = v.GuiPart.CFrame
+            end
+        end
+    end
+    
+    return area
+end
+
+function Teleport(position)
+    if Player.Character.HumanoidRootPart then
+        Player.Character.HumanoidRootPart.CFrame = position
+    end
+end
+
+function Equip(toolname)
+    local tool = Player.Backpack:FindFirstChild(toolname)
+    if tool then
+        Player.Character.Humanoid:EquipTool(tool)
+    end
+end
+
+function IsEquipped(toolname)
+    for _, tool in ipairs(Player.Character:GetChildren()) do
+        if tool:IsA("Tool") and tool.Name == toolname then
+            return true
+        end
+    end
+    
+    return false
+end
+
+local Window = OrionLib:MakeWindow({Name = "Akashia Hub"})
+
+local MainTab = Window:MakeTab({
+	Name = "Main",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+MainTab:AddToggle({
+	Name = "Auto Farm",
+	Default = false,
+	Callback = function(Value)
+		while Value do
+            local area = GetArea()
+            if area then
+                Teleport(area)
+            end
+
+            while Player.Character.Humanoid and wait() do
+                if not Value then
+                    break
+                end
+                if not IsEquipped('Punch') then
+                    Equip('Punch')
+                end
+                Punch()
+            end
+        end
+	end    
+})
