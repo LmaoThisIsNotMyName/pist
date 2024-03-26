@@ -1,5 +1,6 @@
 local Player = game:GetService('Players').LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+_G.AutoFarm = false
 
 function Punch()
     local args = {
@@ -59,23 +60,22 @@ local MainTab = Window:MakeTab({
 MainTab:AddToggle({
 	Name = "Auto Farm",
 	Default = false,
-	Callback = spawn(function(Value)
-        while Value == true do
-            local tool = 'Punch'
-            local area = GetArea()
-            if area then
-                Teleport(area)
-            end
-            while Player.Character.Humanoid do
-                if Value == false then
-                    break
+	Callback = function(Value)
+        _G.AutoFarm = Value
+        while _G.AutoFarm do
+            if Player.Character.Humanoid then
+                local area = GetArea()
+                local tool = 'Punch'
+                if area then
+                    Teleport(area)
                 end
-                if IsEquipped(tool) then
-                    Equip(tool)
+                while wait() do
+                    if not IsEquipped(tool) then
+                        Equip(tool)
+                    end
+                    Punch()
                 end
-                Punch()
-                wait()
             end
         end
-    end)
+    end
 })
