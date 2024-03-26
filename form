@@ -170,7 +170,7 @@ local SettingTab = Window:MakeTab({
 })
 
 SettingTab:AddButton({
-	Name = "Potato Graphic (reduce lag mayebe)",
+	Name = "Potato Graphic (reduce lag maybe)",
 	Callback = PotatoGraphic
 })
 
