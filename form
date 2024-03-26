@@ -170,8 +170,20 @@ local SettingTab = Window:MakeTab({
 })
 
 SettingTab:AddButton({
-	Name = "Potato Graphic (reduce lag maybe)",
+	Name = "Potato Graphic (May reduce lag)",
 	Callback = PotatoGraphic
+})
+
+SettingTab:AddToggle({
+	Name = "White Screen (Significantly reduce lag, best option for AFK)",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+            game:GetService("RunService"):Set3dRenderingEnabled(false)
+        else
+            game:GetService("RunService"):Set3dRenderingEnabled(true)
+        end
+	end    
 })
 
 OrionLib:Init()
