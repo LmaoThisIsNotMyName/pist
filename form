@@ -2,7 +2,10 @@ local Player = game:GetService('Players').LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 _G.AutoFarm = false
 
-function Punch() game:GetService("Players").LocalPlayer.Character.Punch.Event:FireServer(unpack({[1]=2})) end
+function Punch()
+    if not alive() then return false end
+    game:GetService("Players").LocalPlayer.Character.Punch.Event:FireServer(unpack({[1]=2}))
+end
 
 function GetArea()
     local area = nil
@@ -21,12 +24,12 @@ function GetArea()
 end
 
 function Teleport(position)
-    if Player.Character.HumanoidRootPart then
-        Player.Character.HumanoidRootPart.CFrame = position
-    end
+    if not alive() then return false end
+    Player.Character.HumanoidRootPart.CFrame = position
 end
 
 function Equip(toolname)
+    if not alive() then return false end
     local tool = Player.Backpack:FindFirstChild(toolname)
     if tool then
         Player.Character.Humanoid:EquipTool(tool)
@@ -34,12 +37,20 @@ function Equip(toolname)
 end
 
 function IsEquipped(toolname)
+    if not alive() then return false end
     for _, tool in ipairs(Player.Character:GetChildren()) do
         if tool:IsA("Tool") and tool.Name == toolname then
             return true
         end
     end
     
+    return false
+end
+
+function alive()
+    if Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character then
+        return true
+    end
     return false
 end
 
@@ -58,14 +69,12 @@ MainTab:AddToggle({
         _G.AutoFarm = Value
         
         while _G.AutoFarm do
-            local tool = 'Punch'
             local area = GetArea()
-
-            if area and Player.Character:FindFirstChildOfClass("Humanoid") then
+            local tool = "Punch"
+            if area then
                 Teleport(area)
             end
-
-            while _G.AutoFarm and wait() and Player.Character:FindFirstChildOfClass("Humanoid") do
+            while wait() do
                 if not IsEquipped(tool) then
                     Equip(tool)
                 end
