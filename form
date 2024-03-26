@@ -82,7 +82,7 @@ MainTab:AddToggle({
                     Equip(tool)
                 end
 
-                if game.GetService('Players').LocalPlayer.Character:FindFirstChild("Punch") then Punch() end
+                if game:GetService('Players').LocalPlayer.Character:FindFirstChild("Punch") then Punch() end
             end
         end
 
